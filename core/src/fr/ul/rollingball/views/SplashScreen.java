@@ -17,17 +17,29 @@ import fr.ul.rollingball.dataFactories.TextureFactory;
 public class SplashScreen extends ScreenAdapter {
     protected SpriteBatch listeAff;
     protected RollingBall rollBall;
+    protected float duree;
+
 
     public SplashScreen(RollingBall rb){
         rollBall=rb;
         listeAff=new SpriteBatch();
+
+    }
+
+    public void show(){
+        duree=0;
     }
 
     public void render(float delta){
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        listeAff.begin();
-        listeAff.draw(TextureFactory.getInstance().getIntro(),0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        listeAff.end();
+        duree=duree+delta;
+        if (duree>=3){
+            rollBall.toGameScreen();
+        }else {
+            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+            listeAff.begin();
+            listeAff.draw(TextureFactory.getInstance().getIntro(), 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            listeAff.end();
+        }
     }
 
     public void dispose(){
