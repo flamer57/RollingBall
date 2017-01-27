@@ -11,17 +11,27 @@ import java.io.FileFilter;
  * Created by molina9u on 24/01/17.
  */
 public class TextureFactory {
-    protected static Texture intro = new Texture(Gdx.files.internal("images/Intro.jpg"));
-    protected static Texture decor = new Texture(Gdx.files.internal("images/Deco.jpg"));
-    protected static Texture boule = new Texture(Gdx.files.internal("images/boule.bmp"));
-    protected static Texture badlogic = new Texture(Gdx.files.internal("images/badlogic.jpg"));
-    protected static Texture bravo = new Texture(Gdx.files.internal("images/Bravo.jpg"));
-    protected static Texture pastNrml = new Texture(Gdx.files.internal("images/pastilleNormale.bmp"));
-    protected static Texture pastTaille = new Texture(Gdx.files.internal("images/pastilleTaille.bmp"));
-    protected static Texture pastTempsAnim = new Texture(Gdx.files.internal("images/pastilleTemps.png"));
-    protected static Texture pastTemps = new Texture(Gdx.files.internal("images/pastilleTemps.bmp"));
-    protected static Texture perte = new Texture(Gdx.files.internal("images/Perte.bmp"));
-    protected static FileHandle listeLaby = new FileHandle("Liste");
+    protected final static Texture intro = new Texture(Gdx.files.internal("images/Intro.jpg"));
+    protected final static Texture decor = new Texture(Gdx.files.internal("images/Deco.jpg"));
+    protected final static Texture boule = new Texture(Gdx.files.internal("images/boule.bmp"));
+    protected final static Texture badlogic = new Texture(Gdx.files.internal("images/badlogic.jpg"));
+    protected final static Texture bravo = new Texture(Gdx.files.internal("images/Bravo.jpg"));
+    protected final static Texture pastNrml = new Texture(Gdx.files.internal("images/pastilleNormale.bmp"));
+    protected final static Texture pastTaille = new Texture(Gdx.files.internal("images/pastilleTaille.bmp"));
+    protected final static Texture pastTempsAnim = new Texture(Gdx.files.internal("images/pastilleTemps.png"));
+    protected final static Texture pastTemps = new Texture(Gdx.files.internal("images/pastilleTemps.bmp"));
+    protected final static Texture perte = new Texture(Gdx.files.internal("images/Perte.bmp"));
+    protected static FileHandle[] listeLaby=Gdx.files.internal("images/").list(new FileFilter() {
+        @Override
+        public boolean accept(File file) {
+            if(file.getPath().matches("images/Laby.*[.]png")){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    });
+
 
     private static TextureFactory ourInstance = new TextureFactory();
 
