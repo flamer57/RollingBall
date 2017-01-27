@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+import fr.ul.rollingball.models.World;
 import fr.ul.rollingball.views.GameScreen;
 import fr.ul.rollingball.views.SplashScreen;
 
@@ -19,9 +20,9 @@ public class RollingBall extends Game {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		gameScreen=new GameScreen(this);
 		splashScreen= new SplashScreen(this);
+
 		this.setScreen(splashScreen);
 	}
 
@@ -32,7 +33,6 @@ public class RollingBall extends Game {
 	@Override
 	public void dispose () {
 		batch.dispose();
-		img.dispose();
 		gameScreen.dispose();
 		splashScreen.dispose();
 	}
