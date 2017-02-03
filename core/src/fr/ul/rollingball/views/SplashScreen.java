@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import fr.ul.rollingball.RollingBall;
+import fr.ul.rollingball.dataFactories.SoundFactory;
 import fr.ul.rollingball.dataFactories.TextureFactory;
 
 /**
@@ -23,6 +24,7 @@ public class SplashScreen extends ScreenAdapter {
     public SplashScreen(RollingBall rb){
         rollBall=rb;
         listeAff=new SpriteBatch();
+        //SoundFactory.getInstance().playVictoire(1);
 
     }
 

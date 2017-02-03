@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class Boule extends MovableElement {
-    protected static float RAYONDEFAUT=200;
+    protected static float RAYONDEFAUT=30;
     protected float rayon;
 
 

@@ -31,8 +31,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
         update();
         listeAff.begin();
-        listeAff.draw(TextureFactory.getInstance().getDecor(),0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
-        monde.getBoule().draw(listeAff);
+        monde.draw(listeAff);
         listeAff.end();
     }
 
