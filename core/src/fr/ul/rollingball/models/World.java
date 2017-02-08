@@ -36,6 +36,7 @@ public class World {
     public void draw(SpriteBatch sb) {
 
         sb.draw(TextureFactory.getInstance().getDecor(),0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+
         sb.draw(textLaby,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         boule.draw(sb);
 

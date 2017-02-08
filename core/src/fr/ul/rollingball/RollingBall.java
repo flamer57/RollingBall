@@ -6,7 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
+import fr.ul.rollingball.dataFactories.SoundFactory;
+import fr.ul.rollingball.dataFactories.TextureFactory;
 import fr.ul.rollingball.models.World;
 import fr.ul.rollingball.views.GameScreen;
 import fr.ul.rollingball.views.SplashScreen;

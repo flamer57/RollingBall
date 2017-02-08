@@ -24,7 +24,7 @@ public class SplashScreen extends ScreenAdapter {
     public SplashScreen(RollingBall rb){
         rollBall=rb;
         listeAff=new SpriteBatch();
-        //SoundFactory.getInstance().playVictoire(1);
+        SoundFactory.getInstance().playVictoire(1);
 
     }
 
