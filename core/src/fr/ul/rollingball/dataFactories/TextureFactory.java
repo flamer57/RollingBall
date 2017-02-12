@@ -131,11 +131,15 @@ public class TextureFactory {
         return pastTempsAnim;
     }
 
-    public static Array<Sprite> getPastNrmlAnim() {
-        return pastNrmlAnim;
+    public static Sprite getPastNrmlAnim(int i) {
+        return pastNrmlAnim.get(i);
     }
 
-    public static Array<Sprite> getPastTailleAnim() {
-        return pastTailleAnim;
+    public static int getSizeNrml(){
+        return pastNrmlAnim.size;
+    }
+
+    public static Sprite getPastTailleAnim(int i) {
+        return pastTailleAnim.get(i);
     }
 }

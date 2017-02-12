@@ -1,5 +1,6 @@
 package fr.ul.rollingball.models;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -10,10 +11,13 @@ import fr.ul.rollingball.dataFactories.TextureFactory;
  */
 
 public class PillSize extends Pill {
-    protected int pastilleNum;
+    protected int spriteNum;
+    protected float tempsEcoule;
+
     public PillSize(World mnd, Vector2 vct) {
         super(mnd, vct);
-        pastilleNum = 0;
+        spriteNum = 0;
+        tempsEcoule = 0;
     }
 
     @Override
@@ -23,6 +27,12 @@ public class PillSize extends Pill {
 
     @Override
     public void draw(SpriteBatch listeAff) {
-        listeAff.draw(TextureFactory.getInstance().getPastTaille(),this.getX(),this.getY(),this.getRayon(),this.getRayon());
+        if (tempsEcoule>0.3) {
+            spriteNum = (spriteNum + 1) % TextureFactory.getInstance().getSizeNrml();
+            tempsEcoule=0;
+        }else{
+            tempsEcoule += Gdx.graphics.getDeltaTime();
+        }
+        listeAff.draw(TextureFactory.getInstance().getPastTailleAnim(spriteNum),this.getX(),this.getY(),this.getRayon(),this.getRayon());
     }
 }
