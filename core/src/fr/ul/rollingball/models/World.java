@@ -29,13 +29,8 @@ public class World {
         numLaby=0;
         imLaby= TextureFactory.getInstance().getLaby(numLaby);
         textLaby = new Texture(imLaby);
-        listePills = new Array<Pill>(6);
-        listePills.add(new PillNormal(this,new Vector2(10,10)));
-        listePills.add(new PillTime(this,new Vector2(200,300)));
-        listePills.add(new PillSize(this,new Vector2(10,100)));
-        listePills.add(new PillTime(this,new Vector2(800,700)));
-        listePills.add(new PillNormal(this,new Vector2(600,400)));
-        listePills.add(new PillSize(this,new Vector2(500,500)));
+        listePills = new Array<Pill>();
+        extractPills();
     }
 
     public Boule getBoule() {
@@ -43,6 +38,21 @@ public class World {
     }
 
     public void extractPills(){
+        for (int i=0;i<imLaby.getWidth();i+=5){
+            for (int j=0;j<imLaby.getHeight();j+=11){
+               if (imLaby.getPixel(j,i)== -128){
+                   listePills.add(new PillNormal(this,new Vector2(j,i)));
+               }else {
+                   if (imLaby.getPixel(j,i) == -200) {
+                       listePills.add(new PillSize(this, new Vector2(j,i)));
+                   }else {
+                       if (imLaby.getPixel(j,i) == -225) {
+                           listePills.add(new PillTime(this, new Vector2(j,i)));
+                       }
+                   }
+               }
+            }
+        }
     }
 
     public void draw(SpriteBatch sb) {
@@ -54,6 +64,5 @@ public class World {
         for (int i=0;i<listePills.size;i++){
             listePills.get(i).draw(sb);
         }
-
     }
 }

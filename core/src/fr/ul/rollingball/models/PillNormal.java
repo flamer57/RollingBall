@@ -28,7 +28,7 @@ public class PillNormal extends Pill {
     @Override
     public void draw(SpriteBatch listeAff) {
 
-        if (tempsEcoule>0.3) {
+        if (tempsEcoule>0.2) {
             spriteNum = (spriteNum + 1) % TextureFactory.getInstance().getSizeNrml();
             tempsEcoule=0;
         }else{

@@ -26,6 +26,6 @@ public class PillTime extends Pill {
     public void draw(SpriteBatch listeAff) {
         time += Gdx.graphics.getDeltaTime();
         TextureRegion im = TextureFactory.getInstance().getPastTempsAnim().getKeyFrame(time);
-        listeAff.draw(im,this.getX(),this.getY());
+        listeAff.draw(im,this.getX(),this.getY(),this.getRayon(),this.getRayon());
     }
 }
