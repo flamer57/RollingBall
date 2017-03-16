@@ -1,6 +1,7 @@
 package fr.ul.rollingball.models;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,44 +26,109 @@ public class World {
 
     public World(GameScreen gs){
         ecranJeu=gs;
-        boule = new Boule(this,new Vector2(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2));
+
         numLaby=0;
         imLaby= TextureFactory.getInstance().getLaby(numLaby);
-        textLaby = new Texture(imLaby);
+        imLaby.setColor(Color.WHITE);
+        boule = new Boule(this,new Vector2(getWidth()/2,getHeight()/2));
         listePills = new Array<Pill>();
         extractPills();
+        textLaby = new Texture(imLaby);
+
     }
 
     public Boule getBoule() {
         return boule;
     }
 
+    public int getHeight(){
+        return imLaby.getHeight();
+    }
+
+    public int getWidth(){
+        return imLaby.getWidth();
+    }
+
+    public GameScreen getEcranJeu(){
+        return ecranJeu;
+    }
+
+    public void ballOut(){
+        if (boule.isOut()) {
+            this.getEcranJeu().setBallOut();
+        }
+    }
+
+    public void resetBall(){
+        boule.setX(getWidth()/2);
+        boule.setY(getHeight()/2);
+        boule.setVitesseX(0);
+        boule.setVitesseY(0);
+    }
+
     public void extractPills(){
-        for (int i=0;i<imLaby.getWidth();i+=5){
-            for (int j=0;j<imLaby.getHeight();j+=11){
-               if (imLaby.getPixel(j,i)== -128){
-                   listePills.add(new PillNormal(this,new Vector2(j,i)));
+        boolean trouve=false;
+        int j,i;
+        for (j=0;j<getHeight();j++){
+            for (i=0;i<getWidth();i++){
+               if ((0x000000FF & imLaby.getPixel(i,j))== 128){
+                   listePills.add(new PillNormal(this,new Vector2(i+1,getHeight() - j- 5)));
+                   trouve=true;
                }else {
-                   if (imLaby.getPixel(j,i) == -200) {
-                       listePills.add(new PillSize(this, new Vector2(j,i)));
+                   if ((0x000000FF & imLaby.getPixel(i,j)) == 200) {
+                       listePills.add(new PillSize(this, new Vector2(i+1,getHeight() - j- 5)));
+                       trouve=true;
                    }else {
-                       if (imLaby.getPixel(j,i) == -225) {
-                           listePills.add(new PillTime(this, new Vector2(j,i)));
+                       if ((0x000000FF & imLaby.getPixel(i,j)) == 225) {
+                           listePills.add(new PillTime(this, new Vector2(i+1,getHeight() -j-5)));
+                           trouve=true;
                        }
                    }
                }
+                if (trouve){
+                    imLaby.fillRectangle(i-4,j,11,11);
+                    trouve=false;
+                }
+            }
+
+        }
+
+
+    }
+
+    public void eatPill(Vector2 posBoule){
+        for (Pill p:listePills){
+            double dist=Math.pow(posBoule.x-p.getX(),2)+Math.pow(posBoule.y-p.getY(),2);
+            if (dist<=Math.pow(boule.getRayon()+p.getRayon(),2)){
+                p.effect();
+                listePills.removeValue(p,true);
             }
         }
     }
 
+    public int getNumLaby() {
+        return numLaby;
+    }
+
+    public void changeLaby(int i){
+        numLaby=i;
+        imLaby= TextureFactory.getInstance().getLaby(numLaby);
+        imLaby.setColor(Color.WHITE);
+        listePills.clear();
+        extractPills();
+        textLaby = new Texture(imLaby);
+    }
+
     public void draw(SpriteBatch sb) {
 
-        sb.draw(TextureFactory.getInstance().getDecor(),0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        sb.draw(TextureFactory.getInstance().getDecor(),0,0);
 
-        sb.draw(textLaby,0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+        sb.draw(textLaby,0,0);
         boule.draw(sb);
         for (int i=0;i<listePills.size;i++){
             listePills.get(i).draw(sb);
         }
+        ballOut();
+        eatPill(boule.getPosition());
     }
 }

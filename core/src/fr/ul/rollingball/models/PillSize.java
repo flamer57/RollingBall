@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
+import fr.ul.rollingball.dataFactories.SoundFactory;
 import fr.ul.rollingball.dataFactories.TextureFactory;
 
 /**
@@ -22,7 +23,12 @@ public class PillSize extends Pill {
 
     @Override
     public void effect() {
-
+        SoundFactory.getInstance().playPtaille(0.5f);
+        if (monde.getBoule().getRayon()==monde.getBoule().RAYONDEFAUT){
+            monde.getBoule().setRayon(monde.getBoule().getRayon()/2);
+        }else{
+            monde.getBoule().setRayon(monde.getBoule().getRayon()*2);
+        }
     }
 
     @Override
@@ -33,6 +39,6 @@ public class PillSize extends Pill {
         }else{
             tempsEcoule += Gdx.graphics.getDeltaTime();
         }
-        listeAff.draw(TextureFactory.getInstance().getPastTailleAnim(spriteNum),this.getX(),this.getY(),this.getRayon(),this.getRayon());
+        listeAff.draw(TextureFactory.getInstance().getPastTailleAnim(spriteNum),this.getX()-rayon,this.getY()-rayon,this.getRayon()*2,this.getRayon()*2);
     }
 }

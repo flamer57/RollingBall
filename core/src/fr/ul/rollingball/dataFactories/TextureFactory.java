@@ -21,8 +21,9 @@ import java.util.ArrayList;
 public class TextureFactory {
     protected final static Texture intro = new Texture(Gdx.files.internal("images/Intro.jpg"));
     protected final static Texture decor = new Texture(Gdx.files.internal("images/Deco.jpg"));
+    protected static Array<Sprite> boule = new TextureAtlas(Gdx.files.internal("images/boule.pack")).createSprites();
     protected final static Texture badlogic = new Texture(Gdx.files.internal("images/badlogic.jpg"));
-    protected static FileHandle[] listeLaby=Gdx.files.internal("images/").list(new FileFilter() {
+    protected static FileHandle[] listeLaby = Gdx.files.internal("images/").list(new FileFilter() {
         @Override
         public boolean accept(File file) {
             return file.getPath().matches("images/Laby.*[.]png");
@@ -30,10 +31,8 @@ public class TextureFactory {
         }
     });
     private static TextureFactory ourInstance = new TextureFactory();
-    protected final static Texture boule = new Texture(Gdx.files.internal("images/boule.bmp"));
+    //protected final static Texture boule = new Texture(Gdx.files.internal("images/boule.bmp"));
     protected final static Texture bravo = new Texture(Gdx.files.internal("images/Bravo.bmp"));
-    protected final static Texture pastNrml = new Texture(Gdx.files.internal("images/pastilleNormale.bmp"));
-    protected final static Texture pastTaille = new Texture(Gdx.files.internal("images/pastilleTaille.bmp"));
     protected final static Texture pastTempsAn = new Texture(Gdx.files.internal("images/pastilleTemps.png"));
     protected final static Texture pastTemps = new Texture(Gdx.files.internal("images/pastilleTemps.bmp"));
     protected final static Texture perte = new Texture(Gdx.files.internal("images/Perte.bmp"));
@@ -41,49 +40,47 @@ public class TextureFactory {
     protected static Array<Sprite> pastTailleAnim = new TextureAtlas(Gdx.files.internal("images/pastilleTaille.pack")).createSprites();
     protected static Animation<TextureRegion> pastTempsAnim;
 
-
     public static TextureFactory getInstance() {
         return ourInstance;
     }
 
     private TextureFactory() {
         //listeLaby trié par ordre alphabétique
-        Array<String> arr=new Array<String>();
-        for (FileHandle f:listeLaby){
+        Array<String> arr = new Array<String>();
+        for (FileHandle f : listeLaby) {
             arr.add(f.toString());
         }
         arr.sort();
-        int i=0;
-        for (String s:arr){
-            listeLaby[i]=Gdx.files.internal(s);
+        int i = 0;
+        for (String s : arr) {
+            listeLaby[i] = Gdx.files.internal(s);
             i++;
         }
 
-
         //init animation pastille de temps
-        Texture texture=new Texture(Gdx.files.internal("images/pastilleTemps.png"));
+        Texture texture = new Texture(Gdx.files.internal("images/pastilleTemps.png"));
         int larg = texture.getWidth();
-        int nbIms= texture.getHeight()/larg;
-        TextureRegion[][] grille = TextureRegion.split(texture,larg,larg);
+        int nbIms = texture.getHeight() / larg;
+        TextureRegion[][] grille = TextureRegion.split(texture, larg, larg);
         Array<TextureRegion> tabEnLigne = new Array<TextureRegion>();
-        for (i = 0; i < nbIms ; i++) {
+        for (i = 0; i < nbIms; i++) {
             tabEnLigne.add(grille[i][0]);
         }
-        pastTempsAnim = new Animation(0.166f,tabEnLigne, Animation.PlayMode.LOOP);
+        pastTempsAnim = new Animation((float) 1 / nbIms, tabEnLigne, Animation.PlayMode.LOOP);
 
 
     }
 
-    public static Pixmap getLaby(int n){
-        Texture t= new Texture(listeLaby[n]);
-        TextureData td= t.getTextureData();
-        if (!td.isPrepared()){
+    public static Pixmap getLaby(int n) {
+        Texture t = new Texture(listeLaby[n]);
+        TextureData td = t.getTextureData();
+        if (!td.isPrepared()) {
             td.prepare();
         }
         return td.consumePixmap();
     }
 
-    public static int getNbLaby(){
+    public static int getNbLaby() {
         return listeLaby.length;
     }
 
@@ -103,14 +100,6 @@ public class TextureFactory {
         return bravo;
     }
 
-    public static Texture getPastNrml() {
-        return pastNrml;
-    }
-
-    public static Texture getPastTaille() {
-        return pastTaille;
-    }
-
     public static Texture getPastTemps() {
         return pastTemps;
     }
@@ -119,8 +108,8 @@ public class TextureFactory {
         return perte;
     }
 
-    public static Texture getBoule() {
-        return boule;
+    public static Sprite getBoule(int i) {
+        return boule.get(i);
     }
 
     public static Texture getPastTempsAn() {
@@ -135,8 +124,12 @@ public class TextureFactory {
         return pastNrmlAnim.get(i);
     }
 
-    public static int getSizeNrml(){
+    public static int getSizeNrml() {
         return pastNrmlAnim.size;
+    }
+
+    public static int getBouleSize() {
+        return boule.size;
     }
 
     public static Sprite getPastTailleAnim(int i) {

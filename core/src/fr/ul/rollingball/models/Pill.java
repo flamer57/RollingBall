@@ -10,11 +10,14 @@ import fr.ul.rollingball.dataFactories.TextureFactory;
  */
 
 public abstract class Pill extends GameElement {
-    protected static int rayon=100;
+    protected static int rayon=5;
 
 
     public Pill(World mnd, Vector2 vct) {
         super(mnd, vct);
+        position.x=vct.x;
+        position.y=vct.y;
+
     }
 
     public int getRayon(){
